@@ -6,9 +6,9 @@ export const UserContext = createContext({});
 export const UserProvider = ({ children }) => {
   const [signed, setSigned] = useState(false);
 
-  useEffect(() => {
-    console.log(apiUser.post("/"));
-  }, []);
+  // useEffect(() => {
+  //   console.log(apiUser.post("/"));
+  // }, []);
 
   const deslogar = () => {
     setSigned(false);

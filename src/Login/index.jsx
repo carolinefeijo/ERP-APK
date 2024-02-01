@@ -9,12 +9,15 @@ import {
 } from "react-native";
 import { CheckBox } from "react-native-elements";
 import { UserContext } from "../../context/UserProvider";
+import fundoAzul from "../../assets/fundoAzul.jpg";
+import logoVoxVertical from "../../assets/Vox_Logo_Vertical.png";
 import Email from "./inputs/email";
 import Senha from "./inputs/senha";
 
 export default function Login() {
   const { logar, loading, remindMe, setRemindMe } = useContext(UserContext);
   const [login, setLogin] = useState({ email: "", senha: "" });
+
   const allInputs = {
     email: <Email captureText={captureText} />,
     senha: <Senha captureText={captureText} />,
@@ -37,44 +40,39 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require("../../assets/VOX-LOGO-Vertical.png")}
-        style={{ width: "50%", height: 100, maxHeight: 400 }}
-      />
-      {Object.keys(allInputs).map((key, index) => {
-        return (
-          <View key={index} style={{ width: "100%" }}>
-            {allInputs[key]}
+      <Image source={fundoAzul} style={styles.backgroundImage} />
+      <View style={styles.overlayContainer}>
+        <View style={styles.mainContainer}>
+          <Image source={logoVoxVertical} style={styles.logo} />
+
+          {Object.keys(allInputs).map((key, index) => (
+            <View key={index} style={styles.inputContainer}>
+              {allInputs[key]}
+            </View>
+          ))}
+
+          <View style={styles.checkboxContainer}>
+            <CheckBox
+              center
+              title="Lembrar-me"
+              checkedColor="#9ac31c"
+              uncheckedColor="#142a4c"
+              containerStyle={styles.checkboxStyle}
+              textStyle={styles.checkboxText}
+              checked={remindMe}
+              onPress={handleCheckBoxToggle}
+            />
           </View>
-        );
-      })}
 
-      <TouchableOpacity style={styles.btnEntrar} onPress={handleLogin}>
-        {loading ? (
-          <ActivityIndicator size="small" color="#9ac31c" />
-        ) : (
-          <Text style={{ color: "#FFF" }}>Entrar</Text>
-        )}
-      </TouchableOpacity>
-
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          marginTop: 10,
-        }}
-      >
-        <CheckBox
-          center
-          title="Lembrar-me"
-          checkedColor="#9ac31c"
-          uncheckedColor="#142a4c"
-          containerStyle={{ backgroundColor: "#FFF", borderWidth: 0 }}
-          textStyle={{ color: "#142a4c" }}
-          checked={remindMe}
-          onPress={handleCheckBoxToggle}
-        />
+          <TouchableOpacity style={styles.btnEntrar} onPress={handleLogin}>
+            {loading ? (
+              <ActivityIndicator size="small" color="#9ac31c" />
+            ) : (
+              <Text style={styles.btnText}>Entrar</Text>
+            )}
+          </TouchableOpacity>
+          <Text>Esqueceu sua senha ?</Text>
+        </View>
       </View>
     </View>
   );
@@ -83,19 +81,66 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFF",
     alignItems: "center",
     justifyContent: "center",
-    color: "#FFF",
-    gap: 20,
+    position: "relative",
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+  },
+  overlayContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    padding: 20,
+  },
+  mainContainer: {
+    backgroundColor: "#FFF",
+    padding: 10,
+    borderRadius: 3,
+    width: "100%",
+    height: "80%",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+  },
+  logo: {
+    width: "50%",
+    height: 100,
+    maxHeight: 200,
+    marginBottom: 20,
+  },
+  inputContainer: {
+    width: "100%",
   },
   btnEntrar: {
     width: "95%",
-    height: 40,
-    color: "#FFF",
+    height: 50,
+    marginTop: 50,
+    borderRadius: 5,
     backgroundColor: "#142a4c",
-    padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  btnText: {
+    color: "#FFF",
+  },
+  checkboxContainer: {
+    display: "flex",
+    flexDirection: "row",
     alignItems: "center",
     marginTop: 10,
+  },
+  checkboxStyle: {
+    backgroundColor: "#FFF",
+    borderWidth: 0,
+  },
+  checkboxText: {
+    color: "#142a4c",
   },
 });

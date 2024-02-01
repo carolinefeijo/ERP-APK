@@ -11,14 +11,7 @@ export default function Unsigned() {
         name="Login"
         component={Login}
         options={{
-          headerStyle: {
-            backgroundColor: "#142a4c",
-          },
-          headerTitleAlign: "center",
-          headerTintColor: "#FFF",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
+          headerShown: false,
         }}
       />
     </AuthStack.Navigator>
