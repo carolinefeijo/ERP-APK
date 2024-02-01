@@ -13,6 +13,7 @@ import fundoAzul from "../../assets/fundoAzul.jpg";
 import logoVoxVertical from "../../assets/Vox_Logo_Vertical.png";
 import Email from "./inputs/email";
 import Senha from "./inputs/senha";
+import { Icon } from "@rneui/themed";
 
 export default function Login() {
   const { logar, loading, remindMe, setRemindMe } = useContext(UserContext);
@@ -44,6 +45,10 @@ export default function Login() {
       <View style={styles.overlayContainer}>
         <View style={styles.mainContainer}>
           <Image source={logoVoxVertical} style={styles.logo} />
+          <View style={styles.containerWelcome}>
+            <Icon name="heart" type="ionicon" size={28} color={"#A6C73D"} />
+            <Text style={styles.textWelcome}>Seja bem-vindo ao ERP</Text>
+          </View>
 
           {Object.keys(allInputs).map((key, index) => (
             <View key={index} style={styles.inputContainer}>
@@ -104,16 +109,29 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 3,
     width: "100%",
-    height: "80%",
+    height: "70%",
     alignItems: "center",
     justifyContent: "center",
     gap: 10,
   },
   logo: {
-    width: "50%",
-    height: 100,
+    width: "70%",
+    height: 120,
     maxHeight: 200,
     marginBottom: 20,
+  },
+  containerWelcome: {
+    display: "flex",
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+  },
+  textWelcome: {
+    color: "#142a4c",
+    fontSize: 17,
+    fontWeight: "bold",
   },
   inputContainer: {
     width: "100%",
@@ -121,7 +139,6 @@ const styles = StyleSheet.create({
   btnEntrar: {
     width: "95%",
     height: 50,
-    marginTop: 50,
     borderRadius: 5,
     backgroundColor: "#142a4c",
     alignItems: "center",
