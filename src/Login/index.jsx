@@ -58,7 +58,6 @@ export default function Login() {
 
           <View style={styles.checkboxContainer}>
             <CheckBox
-              center
               title="Lembrar-me"
               checkedColor="#9ac31c"
               uncheckedColor="#142a4c"
@@ -76,7 +75,17 @@ export default function Login() {
               <Text style={styles.btnText}>Entrar</Text>
             )}
           </TouchableOpacity>
-          <Text>Esqueceu sua senha ?</Text>
+
+          <TouchableOpacity
+            style={styles.btnEsqueceuSenha}
+            onPress={() => {
+              console.log("Esqueceu sua senha ?");
+            }}
+          >
+            <Text style={styles.btnTextEsqueceuSenha}>
+              esqueceu sua senha ?
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -112,7 +121,7 @@ const styles = StyleSheet.create({
     height: "70%",
     alignItems: "center",
     justifyContent: "center",
-    gap: 10,
+    gap: 5,
   },
   logo: {
     width: "70%",
@@ -127,6 +136,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 10,
+    margin: 20,
   },
   textWelcome: {
     color: "#142a4c",
@@ -135,6 +145,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: "100%",
+    height: 70,
   },
   btnEntrar: {
     width: "95%",
@@ -143,21 +154,35 @@ const styles = StyleSheet.create({
     backgroundColor: "#142a4c",
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 20,
   },
   btnText: {
     color: "#FFF",
+    fontWeight: "bold",
   },
   checkboxContainer: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 10,
+    justifyContent: "flex-start",
+    width: "100%",
   },
   checkboxStyle: {
     backgroundColor: "#FFF",
     borderWidth: 0,
   },
   checkboxText: {
+    color: "#BABABA",
+    fontWeight: "400",
+  },
+  btnEsqueceuSenha: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 30,
+  },
+  btnTextEsqueceuSenha: {
     color: "#142a4c",
+    textAlign: "center",
+    fontSize: 15,
   },
 });

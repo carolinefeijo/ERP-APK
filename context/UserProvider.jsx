@@ -5,6 +5,7 @@ export const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
   const [signed, setSigned] = useState(false);
+  const [remindMe, setRemindMe] = useState(false);
 
   // useEffect(() => {
   //   console.log(apiUser.post("/"));
@@ -15,7 +16,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ signed, deslogar }}>
+    <UserContext.Provider value={{ signed, deslogar, remindMe, setRemindMe }}>
       {children}
     </UserContext.Provider>
   );
