@@ -5,7 +5,6 @@ import Unsigned from "./unsigned";
 
 const AppRoutes = () => {
   const { signed } = useContext(UserContext);
-
   if (signed) {
     return <Signed />;
   } else {

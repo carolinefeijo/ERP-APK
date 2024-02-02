@@ -10,21 +10,20 @@ import {
 
 import { useNavigation } from "@react-navigation/native";
 import { CheckBox } from "react-native-elements";
-import { UserContext } from "../../context/UserProvider";
-import fundoAzul from "../../assets/fundoAzul.jpg";
-import logoVoxVertical from "../../assets/Vox_Logo_Vertical.png";
-import Email from "./inputs/email";
-import Senha from "./inputs/senha";
+import { UserContext } from "../../../../context/UserProvider";
+import fundoAzul from "../../../../assets/fundoAzul.jpg";
+import logoVoxVertical from "../../../../assets/Vox_Logo_Vertical.png";
+import Email from "../../inputs/email";
+import Senha from "../../inputs/senha";
 import { Icon } from "@rneui/themed";
 
-export default function Login() {
+export default function EsqueciSenha() {
   const { logar, loading, remindMe, setRemindMe } = useContext(UserContext);
   const [login, setLogin] = useState({ email: "", senha: "" });
   const navigation = useNavigation();
 
   const allInputs = {
     email: <Email captureText={captureText} />,
-    senha: <Senha captureText={captureText} />,
   };
 
   function captureText(text, name) {
@@ -33,19 +32,6 @@ export default function Login() {
       [name]: text,
     });
   }
-
-  function handleLogin() {
-    logar(login.email, login.senha);
-  }
-
-  const handleCheckBoxToggle = () => {
-    setRemindMe(!remindMe);
-  };
-
-  const handleEsqueceuSenhaPress = () => {
-    navigation.navigate("EsqueciSenha");
-  };
-
   return (
     <View style={styles.container}>
       <Image source={fundoAzul} style={styles.backgroundImage} />
@@ -53,8 +39,8 @@ export default function Login() {
         <View style={styles.mainContainer}>
           <Image source={logoVoxVertical} style={styles.logo} />
           <View style={styles.containerWelcome}>
-            <Icon name="heart" type="ionicon" size={28} color={"#A6C73D"} />
-            <Text style={styles.textWelcome}>Seja bem-vindo ao ERP</Text>
+            {/* <Icon name="heart" type="ionicon" size={28} color={"#A6C73D"} /> */}
+            <Text style={styles.textWelcome}>Esqueceu sua senha ?</Text>
           </View>
 
           {Object.keys(allInputs).map((key, index) => (
@@ -63,7 +49,7 @@ export default function Login() {
             </View>
           ))}
 
-          <View style={styles.checkboxContainer}>
+          {/* <View style={styles.checkboxContainer}>
             <CheckBox
               title="Lembrar-me"
               checkedColor="#9ac31c"
@@ -73,23 +59,14 @@ export default function Login() {
               checked={remindMe}
               onPress={handleCheckBoxToggle}
             />
-          </View>
+          </View> */}
 
-          <TouchableOpacity style={styles.btnEntrar} onPress={handleLogin}>
+          <TouchableOpacity style={styles.btnEntrar}>
             {loading ? (
               <ActivityIndicator size="small" color="#9ac31c" />
             ) : (
-              <Text style={styles.btnText}>Entrar</Text>
+              <Text style={styles.btnText}>Alterar</Text>
             )}
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.btnEsqueceuSenha}
-            onPress={handleEsqueceuSenhaPress}
-          >
-            <Text style={styles.btnTextEsqueceuSenha}>
-              esqueceu sua senha ?
-            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -142,6 +119,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 10,
     margin: 20,
+    marginLeft: 10,
   },
   textWelcome: {
     color: "#142a4c",
