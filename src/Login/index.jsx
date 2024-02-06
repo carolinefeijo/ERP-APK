@@ -7,7 +7,6 @@ import {
   Text,
   ActivityIndicator,
 } from "react-native";
-
 import { useNavigation } from "@react-navigation/native";
 import { CheckBox } from "react-native-elements";
 import { UserContext } from "../../context/UserProvider";

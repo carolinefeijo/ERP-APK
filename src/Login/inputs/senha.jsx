@@ -14,7 +14,7 @@ export default function Senha(props) {
       />
       <TextInput
         secureTextEntry={true}
-        placeholder="Insira sua senha"
+        placeholder={props.placeholder || "insira sua senha"}
         placeholderTextColor={"#BABABA"}
         style={styles.textInput}
         onChangeText={(text) => props.captureText(text, "senha")}

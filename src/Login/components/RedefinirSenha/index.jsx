@@ -13,16 +13,23 @@ import { UserContext } from "../../../../context/UserProvider";
 import fundoAzul from "../../../../assets/fundoAzul.jpg";
 import logoVoxVertical from "../../../../assets/Vox_Logo_Vertical.png";
 import Email from "../../inputs/email";
+import Senha from "../../inputs/senha";
 import { Icon } from "@rneui/themed";
+import { Alert } from "../Alert/index";
 
-export default function EsqueciSenha() {
-  const [isLoading, setisLoading] = useState(false);
+export default function RedefinirSenha() {
   const { loading } = useContext(UserContext);
   const [login, setLogin] = useState({ email: "", senha: "" });
+  const [isModalVisible, setModalVisible] = useState(false);
+
   const navigation = useNavigation();
 
   const allInputs = {
     email: <Email captureText={captureText} />,
+    senha: <Senha captureText={captureText} placeholder={"nova senha"} />,
+    Repitirsenha: (
+      <Senha captureText={captureText} placeholder={"repita a nova senha"} />
+    ),
   };
 
   function captureText(text, name) {
@@ -32,13 +39,12 @@ export default function EsqueciSenha() {
     });
   }
 
-  const handleButtonPress = () => {
-    setisLoading(true);
-    setTimeout(() => {
-      setisLoading(false);
-      alert("Confira seu email para redefinir a senha!");
-      navigation.navigate("RedefinirSenha");
-    }, 2000);
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
   };
 
   return (
@@ -46,21 +52,10 @@ export default function EsqueciSenha() {
       <Image source={fundoAzul} style={styles.backgroundImage} />
       <View style={styles.overlayContainer}>
         <View style={styles.mainContainer}>
-          <TouchableOpacity
-            style={styles.containerButtonBack}
-            onPress={() => navigation.goBack()}
-          >
-            <Icon
-              name="arrow-back-ios"
-              type="MaterialIcons"
-              size={40}
-              color={"#9AC31D"}
-            />
-          </TouchableOpacity>
           <Image source={logoVoxVertical} style={styles.logo} />
           <View style={styles.containerWelcome}>
             <Icon name="heart" type="ionicon" size={28} color={"#A6C73D"} />
-            <Text style={styles.textWelcome}>Esqueceu sua senha?</Text>
+            <Text style={styles.textWelcome}>Redefinir senha</Text>
           </View>
           {Object.keys(allInputs).map((key, index) => (
             <View key={index} style={styles.inputContainer}>
@@ -69,15 +64,17 @@ export default function EsqueciSenha() {
           ))}
           <TouchableOpacity
             style={styles.btnEntrar}
-            onPress={handleButtonPress}
-            disabled={loading || isLoading}
+            onPress={() => {
+              openModal();
+            }}
           >
-            {isLoading ? (
+            {loading ? (
               <ActivityIndicator size="small" color="#9ac31c" />
             ) : (
-              <Text style={styles.btnText}>Enviar</Text>
+              <Text style={styles.btnText}>Alterar senha</Text>
             )}
           </TouchableOpacity>
+          {isModalVisible && <Alert onClose={closeModal} />}
         </View>
       </View>
     </View>
