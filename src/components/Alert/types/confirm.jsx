@@ -1,13 +1,13 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-// import { BiQuestionMark } from "react-icons/bi";
+import { View, Text, Image, TouchableOpacity } from "react-native";
+import logoVoxVertical from "../../../../assets/Vox_Logo_Vertical.png";
 
 const Confirm = ({ alert, quitAlertConfirm, quitAlert }) => {
   return (
     <View style={styles.backgroundModal}>
       <View style={styles.alertContainer}>
+        <Image source={logoVoxVertical} style={styles.logo} />
         <View style={styles.alertContent}>
-          {/* <BiQuestionMark style={styles.alertIcon} /> */}
           <Text style={styles.alertTitle}>{alert.title}</Text>
           <Text style={styles.alertSpan}>{alert.placeholder}</Text>
         </View>
@@ -33,23 +33,32 @@ const Confirm = ({ alert, quitAlertConfirm, quitAlert }) => {
 const styles = {
   backgroundModal: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.765)",
+    justifyContent: "center",
+    backgroundColor: "rgba(28, 28, 28, 0.765)",
+    position: "absolute",
+    zIndex: 1,
+    width: "100%",
+    height: "100%",
   },
   alertContainer: {
-    flexDirection: "column",
-    justifyContent: "space-between",
     width: 300,
+    minHeight: 250,
+    padding: 20,
+    flexDirection: "column",
+    alignItems: "center",
     backgroundColor: "white",
     borderRadius: 5,
     position: "relative",
-    minHeight: 250,
-    padding: 20,
-    alignItems: "center",
     animationName: "maximize",
     animationDuration: "0.2s",
     animationTimingFunction: "linear",
+  },
+  logo: {
+    width: "70%",
+    height: 100,
+    maxHeight: 200,
+    margin: 10,
   },
   alertTitle: {
     textAlign: "center",
@@ -78,17 +87,20 @@ const styles = {
   alertContainerButton: {
     flexDirection: "row",
     width: "100%",
+    gap: 10,
   },
   alertSuccessOkButton: {
     flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
     fontWeight: "lighter",
     fontSize: 15,
     color: "white",
     backgroundColor: "#9ac31c",
     border: "none",
+    borderRadius: 3,
     padding: 15,
     transition: "all 0.1s linear",
-    cursor: "pointer",
   },
   alertSuccessOkButtonHover: {
     backgroundColor: "#142a4c",
@@ -96,14 +108,16 @@ const styles = {
   },
   alertWarningOkButton: {
     flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
     fontWeight: "lighter",
     fontSize: 15,
     color: "white",
     backgroundColor: "#e74e4e",
     border: "none",
+    borderRadius: 3,
     padding: 15,
     transition: "all 0.1s linear",
-    cursor: "pointer",
   },
   alertWarningOkButtonHover: {
     backgroundColor: "#be3030",

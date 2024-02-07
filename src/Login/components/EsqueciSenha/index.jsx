@@ -10,10 +10,10 @@ import {
 
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../../../context/UserProvider";
+import { Icon } from "@rneui/themed";
 import fundoAzul from "../../../../assets/fundoAzul.jpg";
 import logoVoxVertical from "../../../../assets/Vox_Logo_Vertical.png";
 import Email from "../../inputs/email";
-import { Icon } from "@rneui/themed";
 
 export default function EsqueciSenha() {
   const { esqueciSenha, setAlert } = useContext(UserContext);
@@ -33,12 +33,12 @@ export default function EsqueciSenha() {
     });
   }
 
-  function logIn() {
+  function sendPasswordResetEmail() {
     if (login.email === "") {
       setAlert({
         visible: true,
         title: "Atenção!",
-        placeholder: "Pare realizar o login, preencha todos os campos!",
+        placeholder: "Por favor, preencha todos os campos!",
         confirm: false,
         type: "warning",
       });
@@ -75,7 +75,7 @@ export default function EsqueciSenha() {
           ))}
           <TouchableOpacity
             style={styles.btnEntrar}
-            onPress={logIn}
+            onPress={sendPasswordResetEmail}
             disabled={loading || isLoading}
           >
             {isLoading ? (

@@ -1,12 +1,13 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-// import { BiDislike } from "react-icons/bi";
+import { View, Text, Image, TouchableOpacity } from "react-native";
+import logoVoxVertical from "../../../../assets/Vox_Logo_Vertical.png";
+
 const Negative = ({ alert, quitAlert }) => {
   return (
     <View style={styles.backgroundModal}>
       <View style={styles.alertContainer}>
+        <Image source={logoVoxVertical} style={styles.logo} />
         <View style={styles.alertContent}>
-          {/* <BiDislike style={styles.alertIcon} /> */}
           <Text style={styles.alertTitle}>{alert.title}</Text>
           <Text style={styles.alertSpan}>{alert.placeholder}</Text>
         </View>
@@ -26,41 +27,44 @@ const Negative = ({ alert, quitAlert }) => {
 const styles = {
   backgroundModal: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.765)",
+    justifyContent: "center",
+    backgroundColor: "rgba(28, 28, 28, 0.765)",
+    position: "absolute",
+    zIndex: 1,
+    width: "100%",
+    height: "100%",
   },
   alertContainer: {
-    flexDirection: "column",
-    justifyContent: "space-between",
     width: 300,
+    minHeight: 250,
+    padding: 20,
+    flexDirection: "column",
+    alignItems: "center",
     backgroundColor: "white",
     borderRadius: 5,
     position: "relative",
-    minHeight: 250,
-    padding: 20,
-    alignItems: "center",
     animationName: "maximize",
     animationDuration: "0.2s",
     animationTimingFunction: "linear",
+  },
+  logo: {
+    width: "70%",
+    height: 100,
+    maxHeight: 200,
+    margin: 10,
   },
   alertTitle: {
     textAlign: "center",
     fontSize: 20,
     color: "#142a4c",
-    padding: 10,
   },
   alertContent: {
     flexDirection: "column",
     padding: 20,
     alignItems: "center",
     justifyContent: "center",
-  },
-  alertIcon: {
-    width: "30%",
-    height: "30%",
-    padding: 10,
-    color: "#142a4c",
+    gap: 10,
   },
   alertSpan: {
     textAlign: "center",
@@ -70,18 +74,21 @@ const styles = {
   },
   alertContainerButton: {
     flexDirection: "row",
-    width: "100%",
+    width: "50%",
   },
   alertSuccessOkButton: {
     flex: 1,
     fontWeight: "lighter",
     fontSize: 15,
     color: "white",
-    backgroundColor: "#9ac31c",
+    backgroundColor: "#142a4c",
     border: "none",
+    borderRadius: 5,
     padding: 15,
     transition: "all 0.1s linear",
     cursor: "pointer",
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttonText: {
     color: "white",

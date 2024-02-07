@@ -1,9 +1,12 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
+import logoVoxVertical from "../../../../assets/Vox_Logo_Vertical.png";
+
 const Success = ({ alert, quitAlert }) => {
   return (
     <View style={styles.backgroundModal}>
       <View style={styles.alertContainer}>
+        <Image source={logoVoxVertical} style={styles.logo} />
         <View style={styles.alertContent}>
           <Text style={styles.alertTitle}>{alert.title}</Text>
           <Text style={styles.alertSpan}>{alert.placeholder}</Text>
@@ -24,8 +27,8 @@ const Success = ({ alert, quitAlert }) => {
 const styles = {
   backgroundModal: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center",
     backgroundColor: "rgba(28, 28, 28, 0.765)",
     position: "absolute",
     zIndex: 1,
@@ -33,30 +36,35 @@ const styles = {
     height: "100%",
   },
   alertContainer: {
-    flexDirection: "column",
-    justifyContent: "space-between",
     width: 300,
+    minHeight: 250,
+    padding: 20,
+    flexDirection: "column",
+    alignItems: "center",
     backgroundColor: "white",
     borderRadius: 5,
     position: "relative",
-    minHeight: 250,
-    padding: 20,
-    alignItems: "center",
     animationName: "maximize",
     animationDuration: "0.2s",
     animationTimingFunction: "linear",
+  },
+  logo: {
+    width: "70%",
+    height: 100,
+    maxHeight: 200,
+    margin: 10,
   },
   alertTitle: {
     textAlign: "center",
     fontSize: 20,
     color: "#142a4c",
-    padding: 10,
   },
   alertContent: {
     flexDirection: "column",
     padding: 20,
     alignItems: "center",
     justifyContent: "center",
+    gap: 10,
   },
   alertSpan: {
     textAlign: "center",
