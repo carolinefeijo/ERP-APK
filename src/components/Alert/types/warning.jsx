@@ -29,7 +29,7 @@ const styles = {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.765)",
+    backgroundColor: "rgba(175, 52, 52, 0.765)",
   },
   alertContainer: {
     flexDirection: "column",

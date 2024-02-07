@@ -15,11 +15,10 @@ import logoVoxVertical from "../../../../assets/Vox_Logo_Vertical.png";
 import Email from "../../inputs/email";
 import Senha from "../../inputs/senha";
 import { Icon } from "@rneui/themed";
-import { Alert } from "../Alert/index";
 
 export default function RedefinirSenha() {
   const { loading } = useContext(UserContext);
-  const [login, setLogin] = useState({ email: "", senha: "" });
+  const [login, setLogin] = useState({ email: "", senha: "", senha2: "" });
   const [isModalVisible, setModalVisible] = useState(false);
 
   const navigation = useNavigation();
@@ -74,7 +73,6 @@ export default function RedefinirSenha() {
               <Text style={styles.btnText}>Alterar senha</Text>
             )}
           </TouchableOpacity>
-          {isModalVisible && <Alert onClose={closeModal} />}
         </View>
       </View>
     </View>

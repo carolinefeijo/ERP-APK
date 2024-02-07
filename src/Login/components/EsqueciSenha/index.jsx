@@ -16,9 +16,10 @@ import Email from "../../inputs/email";
 import { Icon } from "@rneui/themed";
 
 export default function EsqueciSenha() {
+  const { esqueciSenha, setAlert } = useContext(UserContext);
+  const [login, setLogin] = useState({ email: "" });
   const [isLoading, setisLoading] = useState(false);
   const { loading } = useContext(UserContext);
-  const [login, setLogin] = useState({ email: "", senha: "" });
   const navigation = useNavigation();
 
   const allInputs = {
@@ -32,14 +33,19 @@ export default function EsqueciSenha() {
     });
   }
 
-  const handleButtonPress = () => {
-    setisLoading(true);
-    setTimeout(() => {
-      setisLoading(false);
-      alert("Confira seu email para redefinir a senha!");
-      navigation.navigate("RedefinirSenha");
-    }, 2000);
-  };
+  function logIn() {
+    if (login.email === "") {
+      setAlert({
+        visible: true,
+        title: "Atenção!",
+        placeholder: "Pare realizar o login, preencha todos os campos!",
+        confirm: false,
+        type: "warning",
+      });
+    } else {
+      esqueciSenha(login.email);
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -69,7 +75,7 @@ export default function EsqueciSenha() {
           ))}
           <TouchableOpacity
             style={styles.btnEntrar}
-            onPress={handleButtonPress}
+            onPress={logIn}
             disabled={loading || isLoading}
           >
             {isLoading ? (

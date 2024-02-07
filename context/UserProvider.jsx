@@ -78,10 +78,11 @@ export const UserProvider = ({ children }) => {
     try {
       const response = await apiUser.post("/esqueci-senha", { email });
       const { success, message } = response.data;
+      console.log(response.data);
       if (success) {
         setAlert({
           visible: true,
-          title: "Sucesso!",
+          title: "Verifique seu e-mail!",
           placeholder: message,
           confirm: false,
           type: "success",

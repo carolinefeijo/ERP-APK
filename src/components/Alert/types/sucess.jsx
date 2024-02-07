@@ -1,12 +1,10 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-// import { BiLike } from "react-icons/bi";
 const Success = ({ alert, quitAlert }) => {
   return (
     <View style={styles.backgroundModal}>
       <View style={styles.alertContainer}>
         <View style={styles.alertContent}>
-          {/* <BiLike style={styles.alertIcon} /> */}
           <Text style={styles.alertTitle}>{alert.title}</Text>
           <Text style={styles.alertSpan}>{alert.placeholder}</Text>
         </View>
@@ -28,7 +26,11 @@ const styles = {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.765)",
+    backgroundColor: "rgba(28, 28, 28, 0.765)",
+    position: "absolute",
+    zIndex: 1,
+    width: "100%",
+    height: "100%",
   },
   alertContainer: {
     flexDirection: "column",
@@ -56,12 +58,6 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
   },
-  alertIcon: {
-    width: "30%",
-    height: "30%",
-    padding: 10,
-    color: "#142a4c",
-  },
   alertSpan: {
     textAlign: "center",
     fontSize: 15,
@@ -70,18 +66,21 @@ const styles = {
   },
   alertContainerButton: {
     flexDirection: "row",
-    width: "100%",
+    width: "50%",
   },
   alertSuccessOkButton: {
     flex: 1,
     fontWeight: "lighter",
     fontSize: 15,
     color: "white",
-    backgroundColor: "#9ac31c",
+    backgroundColor: "#142a4c",
     border: "none",
+    borderRadius: 5,
     padding: 15,
     transition: "all 0.1s linear",
     cursor: "pointer",
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttonText: {
     color: "white",
