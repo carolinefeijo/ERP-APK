@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Text,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { CheckBox } from "react-native-elements";
@@ -17,7 +18,8 @@ import Senha from "./inputs/senha";
 import { Icon } from "@rneui/themed";
 
 export default function Login() {
-  const { logar, loading, remindMe, setRemindMe } = useContext(UserContext);
+  const { logar, setAlert, remindMe, setRemindMe } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
   const [login, setLogin] = useState({ email: "", senha: "" });
   const navigation = useNavigation();
 
@@ -34,7 +36,18 @@ export default function Login() {
   }
 
   function handleLogin() {
-    logar(login.email, login.senha);
+    if (login.email === "" || login.senha === "") {
+      setAlert({
+        visible: true,
+        title: "Atenção!",
+        placeholder: "Por favor, preencha todos os campos!",
+        confirm: false,
+        type: "warning",
+      });
+    } else {
+      setLoading(true);
+      logar(login.email, login.senha).finally(() => setLoading(false));
+    }
   }
 
   const handleCheckBoxToggle = () => {
@@ -46,62 +59,74 @@ export default function Login() {
   };
 
   return (
-    <View style={styles.container}>
-      <Image source={fundoAzul} style={styles.backgroundImage} />
-      <View style={styles.overlayContainer}>
-        <View style={styles.mainContainer}>
-          <Image source={logoVoxVertical} style={styles.logo} />
-          <View style={styles.containerWelcome}>
-            <Icon name="heart" type="ionicon" size={28} color={"#A6C73D"} />
-            <Text style={styles.textWelcome}>Seja bem-vindo ao ERP</Text>
-          </View>
-
-          {Object.keys(allInputs).map((key, index) => (
-            <View key={index} style={styles.inputContainer}>
-              {allInputs[key]}
+    <ScrollView
+      contentContainerStyle={styles.scrollContainer}
+      keyboardShouldPersistTaps="handled"
+    >
+      <View style={styles.container}>
+        <Image source={fundoAzul} style={styles.backgroundImage} />
+        <View style={styles.overlayContainer}>
+          <View style={styles.mainContainer}>
+            <Image source={logoVoxVertical} style={styles.logo} />
+            <View style={styles.containerWelcome}>
+              <Icon name="heart" type="ionicon" size={28} color={"#A6C73D"} />
+              <Text style={styles.textWelcome}>Seja bem-vindo ao ERP</Text>
             </View>
-          ))}
 
-          <View style={styles.checkboxContainer}>
-            <CheckBox
-              title="Lembrar-me"
-              checkedColor="#9ac31c"
-              uncheckedColor="#142a4c"
-              containerStyle={styles.checkboxStyle}
-              textStyle={styles.checkboxText}
-              checked={remindMe}
-              onPress={handleCheckBoxToggle}
-            />
+            {Object.keys(allInputs).map((key, index) => (
+              <View key={index} style={styles.inputContainer}>
+                {allInputs[key]}
+              </View>
+            ))}
+
+            <View style={styles.checkboxContainer}>
+              <CheckBox
+                title="Lembrar-me"
+                checkedColor="#9ac31c"
+                uncheckedColor="#142a4c"
+                containerStyle={styles.checkboxStyle}
+                textStyle={styles.checkboxText}
+                checked={remindMe}
+                onPress={handleCheckBoxToggle}
+              />
+            </View>
+
+            <TouchableOpacity
+              style={styles.btnEntrar}
+              onPress={handleLogin}
+              disabled={loading}
+            >
+              {loading ? (
+                <ActivityIndicator size="small" color="#9ac31c" />
+              ) : (
+                <Text style={styles.btnText}>Entrar</Text>
+              )}
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.btnEsqueceuSenha}
+              onPress={handleEsqueceuSenhaPress}
+            >
+              <Text style={styles.btnTextEsqueceuSenha}>
+                esqueceu sua senha ?
+              </Text>
+            </TouchableOpacity>
           </View>
-
-          <TouchableOpacity style={styles.btnEntrar} onPress={handleLogin}>
-            {loading ? (
-              <ActivityIndicator size="small" color="#9ac31c" />
-            ) : (
-              <Text style={styles.btnText}>Entrar</Text>
-            )}
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.btnEsqueceuSenha}
-            onPress={handleEsqueceuSenhaPress}
-          >
-            <Text style={styles.btnTextEsqueceuSenha}>
-              esqueceu sua senha ?
-            </Text>
-          </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    position: "relative",
   },
   backgroundImage: {
     flex: 1,
@@ -115,17 +140,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    padding: 20,
+    padding: 15,
   },
   mainContainer: {
-    backgroundColor: "#FFF",
-    padding: 10,
-    borderRadius: 3,
-    width: "100%",
-    height: "70%",
+    display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    width: "100%",
+    marginTop: 10,
     gap: 5,
+    backgroundColor: "#FFF",
+    padding: 15,
+    borderRadius: 3,
   },
   logo: {
     width: "70%",

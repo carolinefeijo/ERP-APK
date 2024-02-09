@@ -3,6 +3,7 @@ import { View, TouchableOpacity } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon } from "@rneui/themed";
 import { UserContext } from "../context/UserProvider";
+import Home from "./../src/Home/index";
 
 const AuthStack = createNativeStackNavigator();
 
@@ -34,11 +35,7 @@ export default function Signed() {
           headerStyle: {
             backgroundColor: "#142a4c",
           },
-          headerTitleAlign: "center",
-          headerTintColor: "#FFF",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
+          headerTintColor: "#fff",
         }}
       />
     </AuthStack.Navigator>

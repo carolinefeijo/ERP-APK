@@ -6,22 +6,28 @@ import {
   TouchableOpacity,
   Text,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
-
-import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../../../context/UserProvider";
+import { Icon } from "@rneui/themed";
+import { createURL } from "expo-linking";
+import { useRoute } from "@react-navigation/native";
 import fundoAzul from "../../../../assets/fundoAzul.jpg";
 import logoVoxVertical from "../../../../assets/Vox_Logo_Vertical.png";
 import Email from "../../inputs/email";
 import Senha from "../../inputs/senha";
-import { Icon } from "@rneui/themed";
 
 export default function RedefinirSenha() {
-  const { loading } = useContext(UserContext);
-  const [login, setLogin] = useState({ email: "", senha: "", senha2: "" });
-  const [isModalVisible, setModalVisible] = useState(false);
-
-  const navigation = useNavigation();
+  const route = useRoute();
+  const url = createURL("/Confirmar");
+  const { redefinirSenha } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
+  const [login, setLogin] = useState({
+    email: "",
+    senha: "",
+    senha2: "",
+    hashConfirmacao: route.params.hashConfirmacao?.replace(":", ""),
+  });
 
   const allInputs = {
     email: <Email captureText={captureText} />,
@@ -38,53 +44,47 @@ export default function RedefinirSenha() {
     });
   }
 
-  const openModal = () => {
-    setModalVisible(true);
-  };
-
-  const closeModal = () => {
-    setModalVisible(false);
-  };
-
   return (
-    <View style={styles.container}>
-      <Image source={fundoAzul} style={styles.backgroundImage} />
-      <View style={styles.overlayContainer}>
-        <View style={styles.mainContainer}>
-          <Image source={logoVoxVertical} style={styles.logo} />
-          <View style={styles.containerWelcome}>
-            <Icon name="heart" type="ionicon" size={28} color={"#A6C73D"} />
-            <Text style={styles.textWelcome}>Redefinir senha</Text>
-          </View>
-          {Object.keys(allInputs).map((key, index) => (
-            <View key={index} style={styles.inputContainer}>
-              {allInputs[key]}
+    <ScrollView
+      contentContainerStyle={styles.scrollContainer}
+      keyboardShouldPersistTaps="handled"
+    >
+      <View style={styles.container}>
+        <Image source={fundoAzul} style={styles.backgroundImage} />
+        <View style={styles.overlayContainer}>
+          <View style={styles.mainContainer}>
+            <Image source={logoVoxVertical} style={styles.logo} />
+            <View style={styles.containerWelcome}>
+              <Icon name="heart" type="ionicon" size={28} color={"#A6C73D"} />
+              <Text style={styles.textWelcome}>Redefinir senha</Text>
             </View>
-          ))}
-          <TouchableOpacity
-            style={styles.btnEntrar}
-            onPress={() => {
-              openModal();
-            }}
-          >
-            {loading ? (
-              <ActivityIndicator size="small" color="#9ac31c" />
-            ) : (
-              <Text style={styles.btnText}>Alterar senha</Text>
-            )}
-          </TouchableOpacity>
+            {Object.keys(allInputs).map((key, index) => (
+              <View key={index} style={styles.inputContainer}>
+                {allInputs[key]}
+              </View>
+            ))}
+            <TouchableOpacity style={styles.btnEntrar} onPress={redefinirSenha}>
+              {loading ? (
+                <ActivityIndicator size="small" color="#9ac31c" />
+              ) : (
+                <Text style={styles.btnText}>Alterar senha</Text>
+              )}
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    position: "relative",
   },
   backgroundImage: {
     ...StyleSheet.absoluteFillObject,
@@ -101,10 +101,9 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     backgroundColor: "#FFF",
-    padding: 10,
+    padding: 15,
     borderRadius: 3,
     width: "100%",
-    height: "70%",
     alignItems: "center",
     justifyContent: "center",
     gap: 5,

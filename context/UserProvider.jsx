@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiUser from "./../apiUser";
 
 export const UserContext = createContext({});
@@ -18,47 +19,20 @@ export const UserProvider = ({ children }) => {
     type: "none",
   });
 
-  // useEffect(() => {
-  //   console.log(apiUser.post("/"));
-  // }, []);
-
-  // const validateToken = async () => {
-  //   let refreshToken = document.cookie.split("=")[1];
-
-  //   if (refreshToken && !signed) {
-  //     try {
-  //       apiUser.defaults.headers.common["authorization"] = refreshToken;
-  //       const response = await apiUser.post("/validate-token");
-  //       const { success, token, id, nome } = response.data;
-  //       if (success) {
-  //         setSigned(true);
-  //         setToken(token);
-  //         setUser({ id, nome });
-  //         apiUser.defaults.headers.common["authorization"] = token;
-  //         navigate("/home");
-  //       } else {
-  //         document.cookie = `RT=; path=/; max-age=0`;
-  //         setSigned(false);
-  //         navigate("/login");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error validating token:", error);
-  //     }
-  //   }
-  // };
-
-  // LOGAR
+  //LOGAR NO APP
   const logar = async (email, senha) => {
     try {
       const response = await apiUser.post("/login", { email, senha });
       const { success, message, token, id, nome } = response.data;
+      console.log(response.data);
       if (success) {
         setSigned(true);
         setUser({ id, nome });
         setToken(token);
         apiUser.defaults.headers.common["authorization"] = token;
-        document.cookie = `RT=${token}; path=/; max-age=86400`;
-        navigate("/home");
+        await AsyncStorage.setItem("RT", token);
+        console.log("Token salvo com sucesso no AsyncStorage:", token);
+        navigation.navigate("Home");
       } else {
         setAlert({
           visible: true,
@@ -78,7 +52,6 @@ export const UserProvider = ({ children }) => {
     try {
       const response = await apiUser.post("/esqueci-senha", { email });
       const { success, message } = response.data;
-      console.log(response.data);
       if (success) {
         setAlert({
           visible: true,
@@ -101,6 +74,39 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  // REDEFINIR SENHA
+  const redefinirSenha = async (email, senha, hash) => {
+    try {
+      const response = await apiUser.post("/redefinir-senha", {
+        email,
+        senha,
+        hash,
+      });
+      const { success, message } = response.data;
+      if (success) {
+        setAlert({
+          visible: true,
+          title: "Sucesso!",
+          placeholder: message,
+          confirm: false,
+          type: "success",
+        });
+        navigate("/login");
+      } else {
+        setAlert({
+          visible: true,
+          title: "Atenção!",
+          placeholder: message,
+          confirm: false,
+          type: "warning",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  //DESLOGAR DO APP
+
   const deslogar = () => {
     setSigned(false);
   };
@@ -118,7 +124,7 @@ export const UserProvider = ({ children }) => {
         remindMe,
         setRemindMe,
         esqueciSenha,
-        // alterarSenha,
+        redefinirSenha,
       }}
     >
       {children}

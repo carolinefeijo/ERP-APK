@@ -14,7 +14,7 @@ const Warning = ({ alert, quitAlert }) => {
         <View style={styles.alertContainerButton}>
           <TouchableOpacity
             style={styles.alertSuccessOkButton}
-            onPress={quitAlert}
+            onPress={() => quitAlert()}
           >
             <Text style={styles.buttonText}>Ok</Text>
           </TouchableOpacity>
@@ -31,7 +31,7 @@ const styles = {
     justifyContent: "center",
     backgroundColor: "rgba(28, 28, 28, 0.765)",
     position: "absolute",
-    zIndex: 1,
+    zIndex: 9999,
     width: "100%",
     height: "100%",
   },
